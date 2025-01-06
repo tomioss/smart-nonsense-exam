@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <br />
+    <div>{{ questiontemplate.Question | safe }}</div>
+    <br />
+    <div>{{ questiontemplate.Options }}</div>
+    <br />
+    <div>{{ questiontemplate.Solution | safe }}</div>
+</div>
+{% endblock content %}
