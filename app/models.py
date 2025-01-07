@@ -15,7 +15,7 @@ class QuestionTemplate(models.Model):
     Options = JSONField()
     Steps = JSONField(null=True, blank=True)
     ImageUrl = models.TextField(null=True, blank=True)
-    tags = models.ManyToManyField(Tag, null=True, blank=True)
+    tags = models.ManyToManyField(Tag)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
