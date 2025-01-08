@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from app.filters import QuestionTemplateFilter
 from app.models import QuestionTemplate
-from app.serializers import QuestionTemplateSerializer
+from app.serializers import QuestionTemplateCreateSerializer, QuestionTemplateSerializer, UnityQuestionTemplateSerializer
 
 
 class QuestionTemplateApiView(
@@ -20,7 +20,19 @@ class QuestionTemplateApiView(
 ):
     permission_classes = (IsAuthenticated,)
     queryset = QuestionTemplate.objects.all().order_by("id")
-    serializer_class = QuestionTemplateSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = QuestionTemplateFilter
+
+    def get_serializer_class(self):
+        if self.action == "create":
+            return QuestionTemplateCreateSerializer
+        return QuestionTemplateSerializer
+
+
+class UnityQuestionTemplateApiView(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+    permission_classes = (IsAuthenticated,)
+    queryset = QuestionTemplate.objects.all().order_by("id").prefetch_related("tags")
+    serializer_class = UnityQuestionTemplateSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = QuestionTemplateFilter
 
